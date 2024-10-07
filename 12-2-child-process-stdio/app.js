@@ -12,5 +12,7 @@
 const { spawn } = require('child_process');
 
 function main(command, args) {
-  return spawn();
+  return spawn(command, args, {
+    stdio: ['ignore', 'inherit', 'pipe']
+  });
 }

@@ -14,10 +14,26 @@
  */
 
 const fs = require('fs');
+const path = require('path');
 
 function readDirAndWriteFile() {
   // Tulis jawaban di bawah ini
-  
+    const currentDir = __dirname;  // Mendapatkan direktori saat ini
+    const allFilesAndFolders = fs.readdirSync(currentDir);  // Membaca semua file dan folder
+    // Filter hanya folder, cek apakah itu direktori
+    const folders = allFilesAndFolders.filter(item => {
+        const itemPath = path.join(currentDir, item);
+        return fs.lstatSync(itemPath).isDirectory();
+    });
+
+    // Sort nama folder secara ascending
+    const sortedFolders = folders.sort();
+
+    // Gabungkan nama folder dengan tanda koma
+    const output = sortedFolders.join(',');
+
+    // Tulis hasilnya ke file 'out.txt'
+    fs.writeFileSync('out.txt', output);
 }
 
 readDirAndWriteFile();

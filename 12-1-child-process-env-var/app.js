@@ -10,11 +10,21 @@
  * 3. Anda bisa menggunakan varian fungsi `spawn` atau `exec` untuk menyelesaikan tantangan ini.
  */
 
-// Tulis kode impor di bawah ini
+    // Tulis kode impor di bawah ini
+const { spawn } = require('child_process');
 
 function main(myEnvVar) {
-  // Tulis jawaban Anda di bawah ini
-  
+    // Tulis jawaban Anda di bawah ini
+    const childProcess = spawn(process.execPath, ['run-me.js'], {
+        env: { MY_ENV_VAR : myEnvVar }, stdio : 'inherit'
+    });
+
+    childProcess.on('exit', (code) => {
+        console.log(`child process exited with code ${code}`);
+        process.exit(0);
+    });
+
+    return childProcess;
 }
 
 module.exports = main;
